@@ -1,21 +1,14 @@
 # Spur
 
-**TODO: Add description**
+Loosely based on https://github.com/chaps-io/public_activity, a very simple utility for quickly setting up an activity stream in your Elixir/Ecto app.
 
-## Installation
+Example of configuration and usage are in the tests, but the basic steps are 
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `spur` to your list of dependencies in `mix.exs`:
+1. Add Spur to your application deps
+2. Generate and run a migration that adds an activities table to your repo (see priv/test/migrations)
+3. Add the following config:
 
-```elixir
-def deps do
-  [
-    {:spur, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/spur](https://hexdocs.pm/spur).
-
+    ```
+    config :spur, ecto_repos: [MyApp.Repo],
+                repo: MyApp.Repo
+    ```
