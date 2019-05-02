@@ -49,3 +49,9 @@ Now instead of using `Repo` to perform your operation, use `Spur` instead.
 ```
 
 A record for both your `Battle` and an `Activity` with action set to insert will be stored in the DB. Of course, the `Battle` fails validations, neither will be inserted and the changeset will be returned with errors, just as Repo would.
+
+---
+
+> <<Someone who finds a trace [Spur] certainly also knows that something has existed before and is now left behind. But one does not just take note of this. One begins to search and to ask oneself where it leads.>> 
+> 
+> Hans Georg-Gadamer, "Hermeneutik auf dem Spur"
