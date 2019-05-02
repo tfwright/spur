@@ -1,10 +1,12 @@
+# Spur
+
 [![Hex.pm](https://img.shields.io/hexpm/v/spur.svg)]()
 
 Loosely based on https://github.com/chaps-io/public_activity, a very simple utility for quickly setting up an activity stream in your Elixir/Ecto app.
 
 More detailed examples of configuration and usage are in the tests.
 
-### Installation
+## Installation
 
 Basic steps are 
 
@@ -14,7 +16,7 @@ Basic steps are
 
     ```
     config :spur, ecto_repos: [MyApp.Repo],
-                repo: MyApp.Repo
+                  repo: MyApp.Repo
     ```
 
 That's enough to start tracking arbitrary activities.
