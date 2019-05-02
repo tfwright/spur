@@ -1,4 +1,4 @@
-# Spur
+[![Hex.pm](https://img.shields.io/hexpm/v/spur.svg)]()
 
 Loosely based on https://github.com/chaps-io/public_activity, a very simple utility for quickly setting up an activity stream in your Elixir/Ecto app.
 
