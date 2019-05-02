@@ -1,0 +1,26 @@
+# Elixir CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-elixir/ for more details
+version: 2
+jobs:
+  build:
+    docker:
+      - image: bitwalker/alpine-elixir:1.8.1
+        environment:
+          - MIX_ENV=test
+      - image: postgres:9.6
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: whoseturnto_test
+          POSTGRES_PASSWORD: postgres
+
+    working_directory: ~/whoseturnto
+
+    steps:
+      - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - run: mix deps.get
+      - run: mix ecto.create
+      - run: mix ecto.migrate
+      - run: mix test
