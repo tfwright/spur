@@ -1,8 +1,6 @@
 defmodule Spur do
   @moduledoc """
-  <<Someone who finds a trace [Spur] certainly also knows that something has existed
-  before and is now left behind. But one does not just take note of this.
-  One begins to search and to ask oneself where it leads.>> HGG, "Hermeneutik auf dem Spur"
+  Simple activity tracking for Ecto-backed Elixir apps.
   """
 
   alias Spur.{Activity, Trackable}
