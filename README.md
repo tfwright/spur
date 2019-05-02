@@ -12,3 +12,32 @@ Example of configuration and usage are in the tests, but the basic steps are
     config :spur, ecto_repos: [MyApp.Repo],
                 repo: MyApp.Repo
     ```
+
+That's enough to start tracking arbitrary activities.
+
+    ```
+    %Spur.Activity{actor: "caesar", action: "came", object: "your-county", meta: %{also: ["saw", "conquered"]}}
+    
+Fields are based on https://www.w3.org/TR/activitystreams-core/#example-1
+
+If you want to make use of automatic tracking of inserts, updates and deletes, make sure your objects implement the required fields as functions.
+
+    ```
+    defmodule Battle do
+      defimpl Spur.Trackable, for: Diddit do
+        def actor(war), do: "Accounts.User:#{war.general_id}"
+        def object(war), do: "war:#{war.id}"
+        def target(_chore), do: nil
+      end
+    end
+    ```
+    
+Now instead of using `Repo` to perform your operation, use `Spur` instead.
+
+  ```
+  %MyApp.Battle{general_id: 5}
+  |> MyApp.Battle.changeset
+  |> Spur.insert
+  ```
+
+A record for both your `Battle` and an `Activity` with action set to insert will be stored in the DB. Of course, the `Battle` fails validations, neither will be inserted and the changeset will be returned with errors, just as Repo would.
