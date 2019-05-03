@@ -7,8 +7,43 @@ defmodule Spur do
 
   alias Ecto.{Multi}
 
+  @doc """
+  Inserts the given Struct and an `Spur.Activity` record.
+
+  ## Examples
+
+      iex> result = Spur.insert(%SpurTest.TrackableStruct{user: %SpurTest.AppUser{}})
+      ...> with {:ok, %SpurTest.TrackableStruct{}} <- result, do: :ok
+      :ok
+
+      iex> result = Spur.insert(%SpurTest.TrackableStruct{})
+      ...> with {:error, %Ecto.Changeset{}} <- result, do: :error
+      :error
+  """
   def insert(trackable, func_or_params \\ %{}), do: track_with_callback(:insert, trackable, func_or_params)
+
+  @doc """
+  Updates the given Struct and an `Spur.Activity` record.
+
+  ## Examples
+
+      iex> trackable = %SpurTest.TrackableStruct{user: %SpurTest.AppUser{}} |> SpurTest.Repo.insert! |> Ecto.Changeset.change
+      ...> result = Spur.update(trackable)
+      ...> with {:ok, %SpurTest.TrackableStruct{}} <- result, do: :ok
+      :ok
+  """
   def update(trackable, func_or_params \\ %{}), do: track_with_callback(:update, trackable, func_or_params)
+
+  @doc """
+  Deletes the given Struct and an `Spur.Activity` record.
+
+  ## Examples
+
+      iex> trackable = %SpurTest.TrackableStruct{user: %SpurTest.AppUser{}} |> SpurTest.Repo.insert!
+      ...> result = Spur.delete(trackable)
+      ...> with {:ok, %SpurTest.TrackableStruct{}} <- result, do: :ok
+      :ok
+  """
   def delete(trackable, func_or_params \\ %{}), do: track_with_callback(:delete, trackable, func_or_params)
 
   defp track_with_callback(action, trackable, func_or_params) do
