@@ -64,6 +64,7 @@ defmodule Spur do
     [{audience_fkey_name, audience_pkey_name}, {activity_fkey_name, activity_pkey_name}] = audience_assoc_reflection.join_keys
 
     audience_assocs = Trackable.audience(trackable)
+    |> query_to_list
     |> Enum.map(fn audience ->
       %{audience_fkey_name => extract_audience_pkey(audience, audience_pkey_name), activity_fkey_name => activity |> Map.get(activity_pkey_name)}
     end)
@@ -103,4 +104,7 @@ defmodule Spur do
   defp audience_assoc_name do
     Application.fetch_env!(:spur, :audience_assoc_name)
   end
+
+  defp query_to_list(%Ecto.Query{} = query), do: query |> repo().all
+  defp query_to_list([] = list), do: list
 end

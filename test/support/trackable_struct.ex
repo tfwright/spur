@@ -16,6 +16,6 @@ defmodule SpurTest.TrackableStruct do
     def actor(trackable_struct), do: "#{trackable_struct.user_id}"
     def object(trackable_struct), do: "TrackableStruct:#{trackable_struct.id}"
     def target(trackable_struct), do: nil
-    def audience(trackable_struct), do: Ecto.assoc(trackable_struct, :watchers) |> SpurTest.Repo.all
+    def audience(trackable_struct), do: Ecto.assoc(trackable_struct, :watchers)
   end
 end
