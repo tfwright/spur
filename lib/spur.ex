@@ -94,7 +94,10 @@ defmodule Spur do
   end
 
   defp audience_module do
-    Application.fetch_env!(:spur, :audience_module)
+    case Application.fetch_env(:spur, :audience_module) do
+      :error -> nil
+      {:ok, module} -> module
+    end
   end
 
   defp audience_assoc_name do
