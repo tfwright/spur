@@ -18,7 +18,8 @@ defmodule Spur.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      env: [audience_assoc_name: :activities]
     ]
   end
 

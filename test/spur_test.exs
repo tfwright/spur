@@ -54,6 +54,24 @@ defmodule SpurTest do
 
       assert 1 = Spur.Activity |> Repo.aggregate(:count, :id)
     end
+
+    test "associates with audience" do
+      user = Repo.insert!(%AppUser{})
+      test_trackable = %TrackableStruct{user: user} |> Repo.insert!
+
+      watcher = Repo.insert!(%AppUser{})
+      test_trackable
+      |> Repo.preload(:watchers)
+      |> Ecto.Changeset.change
+      |> Ecto.Changeset.put_assoc(:watchers, [watcher])
+      |> Repo.update!
+
+      changeset = Ecto.Changeset.change(test_trackable)
+
+      {:ok, test_trackable} = Spur.update(changeset)
+
+      assert 1 = Ecto.assoc(watcher, :activities) |> Repo.aggregate(:count, :id)
+    end
   end
 
   describe "update/1" do
