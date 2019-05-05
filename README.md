@@ -65,6 +65,16 @@ To automatically associate the `Activity` with an [audience](https://www.w3.org/
 
 Now when you use one of the callback's above to track an object, the resulting `Activity` will automatically be associated with the audience records returned for that object.
 
+      # SpurTest.TrackableStruct
+      def audience(trackable_struct), do: Ecto.assoc(trackable_struct, :watchers)
+
+      [watcher] = trackable_struct.watchers
+
+      Ecto.Changeset.change(trackable_struct)
+      |> Spur.update
+      
+      [%Spur.Activity{action: update}] = watcher.activities
+
 ---
 
 > <<Someone who finds a trace [Spur] certainly also knows that something has existed before and is now left behind. But one does not just take note of this. One begins to search and to ask oneself where it leads.>> 
