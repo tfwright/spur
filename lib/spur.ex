@@ -19,6 +19,14 @@ defmodule Spur do
       iex> result = Spur.insert(%SpurTest.TrackableStruct{})
       ...> with {:error, %Ecto.Changeset{}} <- result, do: :error
       :error
+
+      iex> Spur.insert(%SpurTest.TrackableStruct{user: %SpurTest.AppUser{}}, %{object: "special-user"})
+      ...> Spur.Activity |> where(object: "special-user") |> Repo.exists?
+      true
+
+      iex> Spur.insert(%SpurTest.TrackableStruct{user: %SpurTest.AppUser{name: "Buddy"}}, fn trackable, params -> %{actor: trackable.user.name} end)
+      ...> Spur.Activity |> where(actor: "Buddy") |> Repo.exists?
+      true
   """
   def insert(trackable, func_or_params \\ %{}), do: track_with_callback(:insert, trackable, func_or_params)
 

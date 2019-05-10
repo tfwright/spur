@@ -1,9 +1,11 @@
 defmodule SpurTest do
   use ExUnit.Case
 
-  doctest Spur
-
   alias SpurTest.{Repo, TrackableStruct, AppUser}
+
+  import Ecto.Query
+
+  doctest Spur
 
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
