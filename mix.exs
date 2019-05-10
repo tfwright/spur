@@ -19,7 +19,10 @@ defmodule Spur.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      env: [audience_assoc_name: :activities]
+      env: [
+        audience_assoc_name: :activities,
+        expose_transactions: false
+      ]
     ]
   end
 

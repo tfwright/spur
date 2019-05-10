@@ -59,10 +59,7 @@ defmodule Spur do
     |> Multi.insert(:activity, fn %{trackable: trackable} -> changeset_for_action(trackable, action, func_or_params) end)
     |> Multi.run(:audience, fn _repo, %{trackable: trackable, activity: activity} -> associate_with_audience(audience_module(), activity, trackable) end)
     |> repo().transaction
-    |> case do
-      {:ok, %{trackable: trackable}} -> {:ok, trackable}
-      {:error, _change, changeset, _multi} -> {:error, changeset}
-    end
+    |> transaction_or_result(Application.fetch_env!(:spur, :expose_transactions))
   end
 
   defp associate_with_audience(nil, _, _), do: {:ok, []}
@@ -115,4 +112,12 @@ defmodule Spur do
 
   defp query_to_list(%Ecto.Query{} = query), do: query |> repo().all
   defp query_to_list([] = list), do: list
+
+  defp transaction_or_result(transaction, _expose_transactions = true), do: transaction
+  defp transaction_or_result(transaction, _expose_transactions = false) do
+    case transaction do
+      {:ok, %{trackable: trackable}} -> {:ok, trackable}
+      {:error, _change, changeset, _multi} -> {:error, changeset}
+    end
+  end
 end
