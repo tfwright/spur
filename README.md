@@ -52,7 +52,7 @@ Now instead of using `Repo` to perform your operation, use `Spur` instead.
 |> Spur.insert
 ```
 
-A record for both your `Battle` and an `Activity` with action set to insert will be stored in the DB. Of course, the `Battle` fails validations, neither will be inserted and the changeset will be returned with errors, just as Repo would.
+A record for both your `Battle` and an `Activity` with action set to insert will be stored in the DB. Of course, the `Battle` fails validations, neither will be inserted and the changeset will be returned with errors, just as Repo would. (*Note*: As of 0.3.0, Spur supports the `expose_transactions` config, which when sets to true returns the raw Ecto transaction. Us this if you need to access the created `Activity` struct.) 
 
 ### Audience
 
