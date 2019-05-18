@@ -111,7 +111,7 @@ defmodule Spur do
   end
 
   defp query_to_list(%Ecto.Query{} = query), do: query |> repo().all
-  defp query_to_list([] = list), do: list
+  defp query_to_list(list) when is_list(list), do: list
 
   defp transaction_or_result(transaction, _expose_transactions = true), do: transaction
   defp transaction_or_result(transaction, _expose_transactions = false) do
