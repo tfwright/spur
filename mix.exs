@@ -11,7 +11,9 @@ defmodule Spur.MixProject do
       deps: deps(),
       package: package(),
       source_url: "https://github.com/tfwright/spur",
-      elixirc_paths: elixirc_paths(Mix.env())
+      elixirc_paths: elixirc_paths(Mix.env()),
+      name: "Spur",
+      docs: docs()
     ]
   end
 
@@ -50,6 +52,10 @@ defmodule Spur.MixProject do
        "GitHub" => "https://github.com/tfwright/spur"
      }
    }
+ end
+
+ def docs do
+   [main: "Spur"]
  end
 
  defp elixirc_paths(:test), do: ["lib", "test/support"]
