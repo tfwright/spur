@@ -52,7 +52,7 @@ defmodule SpurTest do
       user = Repo.insert!(%AppUser{})
       test_trackable = %TrackableStruct{user: user}
 
-      {:ok, test_trackable} = Spur.insert(test_trackable)
+      {:ok, _test_trackable} = Spur.insert(test_trackable)
 
       assert 1 = Spur.Activity |> Repo.aggregate(:count, :id)
     end
@@ -70,7 +70,7 @@ defmodule SpurTest do
 
       changeset = Ecto.Changeset.change(test_trackable)
 
-      {:ok, test_trackable} = Spur.update(changeset)
+      {:ok, _test_trackable} = Spur.update(changeset)
 
       assert 1 = Ecto.assoc(watcher, :activities) |> Repo.aggregate(:count, :id)
     end
@@ -101,7 +101,7 @@ defmodule SpurTest do
 
       changeset = Ecto.Changeset.change(test_trackable)
 
-      {:ok, test_trackable} = Spur.update(changeset)
+      {:ok, _test_trackable} = Spur.update(changeset)
 
       assert 1 = Spur.Activity |> Repo.aggregate(:count, :id)
     end
@@ -135,7 +135,7 @@ defmodule SpurTest do
       user = Repo.insert!(%AppUser{})
       test_trackable = %TrackableStruct{user: user} |> Repo.insert!
 
-      {:ok, test_trackable} = Spur.delete(test_trackable)
+      {:ok, _test_trackable} = Spur.delete(test_trackable)
 
       assert 1 = Spur.Activity |> Repo.aggregate(:count, :id)
     end

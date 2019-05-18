@@ -24,7 +24,7 @@ defmodule Spur do
       ...> Spur.Activity |> where(object: "special-user") |> Repo.exists?
       true
 
-      iex> Spur.insert(%SpurTest.TrackableStruct{user: %SpurTest.AppUser{name: "Buddy"}}, fn trackable, params -> %{actor: trackable.user.name} end)
+      iex> Spur.insert(%SpurTest.TrackableStruct{user: %SpurTest.AppUser{name: "Buddy"}}, fn trackable, _params -> %{actor: trackable.user.name} end)
       ...> Spur.Activity |> where(actor: "Buddy") |> Repo.exists?
       true
   """

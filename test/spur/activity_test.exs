@@ -3,7 +3,7 @@ defmodule Spur.ActivityTest do
 
   alias SpurActivity
 
-  alias SpurTest.{Repo, AppUser}
+  alias SpurTest.{Repo}
 
   doctest Spur.Activity
 
