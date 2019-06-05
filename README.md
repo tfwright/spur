@@ -39,7 +39,7 @@ defmodule Battle do
   defimpl Spur.Trackable, for: Diddit do
     def actor(war), do: "Accounts.User:#{war.general_id}"
     def object(war), do: "war:#{war.id}"
-    def target(_chore), do: nil
+    def target(_war), do: nil
   end
 end
 ```
