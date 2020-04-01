@@ -5,12 +5,12 @@ defmodule Spur.Activity do
 
   alias Spur.Activity
 
-  schema "activities" do
-    field :action, :string
-    field :actor, :string
-    field :object, :string, default: nil
-    field :target, :string, default: nil
-    field :meta, :map, default: %{}
+  schema "activity" do
+    field(:action, :string)
+    field(:actor, :string)
+    field(:object, :string, default: nil)
+    field(:target, :string, default: nil)
+    field(:meta, :map, default: %{})
 
     timestamps(updated_at: false)
   end
