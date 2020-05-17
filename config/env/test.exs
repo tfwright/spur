@@ -1,8 +1,9 @@
 use Mix.Config
 
-config :spur, ecto_repos: [SpurTest.Repo],
-              repo: SpurTest.Repo,
-              audience_module: SpurTest.AppUser
+config :spur,
+  ecto_repos: [SpurTest.Repo],
+  repo: SpurTest.Repo,
+  audience_module: SpurTest.AppUser
 
 config :spur, SpurTest.Repo,
   adapter: Ecto.Adapters.Postgres,

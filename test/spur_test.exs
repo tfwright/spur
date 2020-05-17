@@ -39,7 +39,8 @@ defmodule SpurTest do
       user = Repo.insert!(%AppUser{})
       test_trackable = %TrackableStruct{user: user}
 
-      assert {:error, _trackable} = Spur.insert(test_trackable, fn _, p -> Map.merge(p, %{actor: nil}) end)
+      assert {:error, _trackable} =
+               Spur.insert(test_trackable, fn _, p -> Map.merge(p, %{actor: nil}) end)
     end
 
     test "returns the object" do
@@ -59,14 +60,15 @@ defmodule SpurTest do
 
     test "associates with audience" do
       user = Repo.insert!(%AppUser{})
-      test_trackable = %TrackableStruct{user: user} |> Repo.insert!
+      test_trackable = %TrackableStruct{user: user} |> Repo.insert!()
 
       watcher = Repo.insert!(%AppUser{})
+
       test_trackable
       |> Repo.preload(:watchers)
-      |> Ecto.Changeset.change
+      |> Ecto.Changeset.change()
       |> Ecto.Changeset.put_assoc(:watchers, [watcher])
-      |> Repo.update!
+      |> Repo.update!()
 
       changeset = Ecto.Changeset.change(test_trackable)
 
@@ -79,7 +81,7 @@ defmodule SpurTest do
   describe "update/1" do
     test "reponds with ok status" do
       user = Repo.insert!(%AppUser{})
-      test_trackable = %TrackableStruct{user: user} |> Repo.insert!
+      test_trackable = %TrackableStruct{user: user} |> Repo.insert!()
 
       changeset = Ecto.Changeset.change(test_trackable)
 
@@ -88,7 +90,7 @@ defmodule SpurTest do
 
     test "returns the object" do
       user = Repo.insert!(%AppUser{})
-      test_trackable = %TrackableStruct{user: user} |> Repo.insert!
+      test_trackable = %TrackableStruct{user: user} |> Repo.insert!()
 
       changeset = Ecto.Changeset.change(test_trackable)
 
@@ -97,7 +99,7 @@ defmodule SpurTest do
 
     test "inserts the trace" do
       user = Repo.insert!(%AppUser{})
-      test_trackable = %TrackableStruct{user: user} |> Repo.insert!
+      test_trackable = %TrackableStruct{user: user} |> Repo.insert!()
 
       changeset = Ecto.Changeset.change(test_trackable)
 
@@ -110,30 +112,30 @@ defmodule SpurTest do
   describe "delete/1" do
     test "reponds with ok status" do
       user = Repo.insert!(%AppUser{})
-      test_trackable = %TrackableStruct{user: user} |> Repo.insert!
+      test_trackable = %TrackableStruct{user: user} |> Repo.insert!()
 
       assert {:ok, _trackable} = Spur.delete(test_trackable)
     end
 
     test "deletes the object" do
       user = Repo.insert!(%AppUser{})
-      test_trackable = %TrackableStruct{user: user} |> Repo.insert!
+      test_trackable = %TrackableStruct{user: user} |> Repo.insert!()
 
       assert {:ok, _trackable} = Spur.delete(test_trackable)
 
-      assert 0 = TrackableStruct |>  Repo.aggregate(:count, :id)
+      assert 0 = TrackableStruct |> Repo.aggregate(:count, :id)
     end
 
     test "returns the object" do
       user = Repo.insert!(%AppUser{})
-      test_trackable = %TrackableStruct{user: user} |> Repo.insert!
+      test_trackable = %TrackableStruct{user: user} |> Repo.insert!()
 
       assert {_status, test_trackable} = Spur.delete(test_trackable)
     end
 
     test "inserts the trace" do
       user = Repo.insert!(%AppUser{})
-      test_trackable = %TrackableStruct{user: user} |> Repo.insert!
+      test_trackable = %TrackableStruct{user: user} |> Repo.insert!()
 
       {:ok, _test_trackable} = Spur.delete(test_trackable)
 
