@@ -36,7 +36,7 @@ If you want to make use of automatic tracking of inserts, updates and deletes, m
 
 ```
 defmodule Battle do
-  defimpl Spur.Trackable, for: Diddit do
+  defimpl Spur.Trackable, for: __MODULE__ do
     def actor(war), do: "Accounts.User:#{war.general_id}"
     def object(war), do: "war:#{war.id}"
     def target(_war), do: nil
