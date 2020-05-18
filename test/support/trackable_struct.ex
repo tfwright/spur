@@ -2,10 +2,12 @@ defmodule SpurTest.TrackableStruct do
   use Ecto.Schema
 
   schema "trackable_structs" do
-    belongs_to :user, SpurTest.AppUser
+    belongs_to(:user, SpurTest.AppUser)
 
-    many_to_many :watchers, SpurTest.AppUser, join_through: "app_users_trackable_structs",
-                                              join_keys: [trackable_struct_id: :id, user_id: :id]
+    many_to_many(:watchers, SpurTest.AppUser,
+      join_through: "app_users_trackable_structs",
+      join_keys: [trackable_struct_id: :id, user_id: :id]
+    )
 
     timestamps()
   end

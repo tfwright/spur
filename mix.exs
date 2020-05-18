@@ -41,23 +41,23 @@ defmodule Spur.MixProject do
   end
 
   defp package do
-   %{
-     name: :spur,
-     files: ["lib", "mix.exs", "README*"],
-     maintainers: [
-       "T. Floyd Wright",
-     ],
-     licenses: ["Apache License 2.0"],
-     links: %{
-       "GitHub" => "https://github.com/tfwright/spur"
-     }
-   }
- end
+    %{
+      name: :spur,
+      files: ["lib", "mix.exs", "README*"],
+      maintainers: [
+        "T. Floyd Wright"
+      ],
+      licenses: ["Apache License 2.0"],
+      links: %{
+        "GitHub" => "https://github.com/tfwright/spur"
+      }
+    }
+  end
 
- def docs do
-   [main: "Spur"]
- end
+  def docs do
+    [main: "Spur"]
+  end
 
- defp elixirc_paths(:test), do: ["lib", "test/support"]
- defp elixirc_paths(_), do: ["lib"]
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 end

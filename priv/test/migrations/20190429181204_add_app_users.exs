@@ -3,7 +3,7 @@ defmodule SpurTest.Repo.Migrations.AddAppUsers do
 
   def change do
     create table(:app_users) do
-      add :name, :string
+      add(:name, :string)
 
       timestamps()
     end

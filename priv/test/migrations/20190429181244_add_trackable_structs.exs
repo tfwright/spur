@@ -3,7 +3,7 @@ defmodule SpurTest.Repo.Migrations.AddTrackableStructs do
 
   def change do
     create table(:trackable_structs) do
-      add :user_id, references(:app_users)
+      add(:user_id, references(:app_users))
 
       timestamps()
     end
