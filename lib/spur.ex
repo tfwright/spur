@@ -28,7 +28,8 @@ defmodule Spur do
       ...> Spur.Activity |> where(actor: "Buddy") |> Repo.exists?
       true
   """
-  def insert(trackable, func_or_params \\ %{}), do: track_with_callback(:insert, trackable, func_or_params)
+  def insert(trackable, func_or_params \\ %{}),
+    do: track_with_callback(:insert, trackable, func_or_params)
 
   @doc """
   Updates the given Struct and an `Spur.Activity` record.
@@ -40,7 +41,8 @@ defmodule Spur do
       ...> with {:ok, %SpurTest.TrackableStruct{}} <- result, do: :ok
       :ok
   """
-  def update(trackable, func_or_params \\ %{}), do: track_with_callback(:update, trackable, func_or_params)
+  def update(trackable, func_or_params \\ %{}),
+    do: track_with_callback(:update, trackable, func_or_params)
 
   @doc """
   Deletes the given Struct and an `Spur.Activity` record.
@@ -52,27 +54,38 @@ defmodule Spur do
       ...> with {:ok, %SpurTest.TrackableStruct{}} <- result, do: :ok
       :ok
   """
-  def delete(trackable, func_or_params \\ %{}), do: track_with_callback(:delete, trackable, func_or_params)
+  def delete(trackable, func_or_params \\ %{}),
+    do: track_with_callback(:delete, trackable, func_or_params)
 
   defp track_with_callback(action, trackable, func_or_params) do
-    Kernel.apply(Multi, action, [Multi.new, :trackable, trackable])
-    |> Multi.insert(:activity, fn %{trackable: trackable} -> changeset_for_action(trackable, action, func_or_params) end)
-    |> Multi.run(:audience, fn _repo, %{trackable: trackable, activity: activity} -> associate_with_audience(audience_module(), activity, trackable) end)
+    Kernel.apply(Multi, action, [Multi.new(), :trackable, trackable])
+    |> Multi.insert(:activity, fn %{trackable: trackable} ->
+      changeset_for_action(trackable, action, func_or_params)
+    end)
+    |> Multi.run(:audience, fn _repo, %{trackable: trackable, activity: activity} ->
+      associate_with_audience(audience_module(), activity, trackable)
+    end)
     |> repo().transaction
     |> transaction_or_result(Application.fetch_env!(:spur, :expose_transactions))
   end
 
   defp associate_with_audience(nil, _, _), do: {:ok, []}
+
   defp associate_with_audience(module, activity, trackable) do
     audience_assoc_reflection = module.__schema__(:association, audience_assoc_name())
 
-    [{audience_fkey_name, audience_pkey_name}, {activity_fkey_name, activity_pkey_name}] = audience_assoc_reflection.join_keys
+    [{audience_fkey_name, audience_pkey_name}, {activity_fkey_name, activity_pkey_name}] =
+      audience_assoc_reflection.join_keys
 
-    audience_assocs = Trackable.audience(trackable)
-    |> query_to_list
-    |> Enum.map(fn audience ->
-      %{audience_fkey_name => extract_audience_pkey(audience, audience_pkey_name), activity_fkey_name => activity |> Map.get(activity_pkey_name)}
-    end)
+    audience_assocs =
+      Trackable.audience(trackable)
+      |> query_to_list
+      |> Enum.map(fn audience ->
+        %{
+          audience_fkey_name => extract_audience_pkey(audience, audience_pkey_name),
+          activity_fkey_name => activity |> Map.get(activity_pkey_name)
+        }
+      end)
 
     {n, nil} = repo().insert_all(audience_assoc_reflection.join_through, audience_assocs)
 
@@ -114,6 +127,7 @@ defmodule Spur do
   defp query_to_list(list) when is_list(list), do: list
 
   defp transaction_or_result(transaction, _expose_transactions = true), do: transaction
+
   defp transaction_or_result(transaction, _expose_transactions = false) do
     case transaction do
       {:ok, %{trackable: trackable}} -> {:ok, trackable}
