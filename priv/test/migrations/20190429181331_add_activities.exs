@@ -7,7 +7,7 @@ defmodule SpurTest.Repo.Migrations.AddActivities do
       add(:actor, :string)
       add(:object, :string)
       add(:meta, :map)
-
+      add(:target, :string)
       timestamps(updated_at: false)
     end
   end
