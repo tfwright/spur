@@ -12,7 +12,7 @@ More detailed examples of configuration and usage are in the tests.
 Basic steps are
 
 1. Add Spur to your application deps
-2. Generate and run a migration that adds an activities table to your repo (see priv/test/migrations)
+2. Generate and run a migration that adds an "activities" table to your repo (see priv/test/migrations). To use a different table name, set the `activities_table_name` config.
 3. Add the following config:
 
     ```
