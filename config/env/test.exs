@@ -10,7 +10,7 @@ config :spur, SpurTest.Repo,
   username: "postgres",
   password: "postgres",
   database: "spur_test_repo",
-  hostname: "localhost",
+  hostname: System.get_env("DB_HOST") || "localhost",
   poolsize: 10,
   pool: Ecto.Adapters.SQL.Sandbox,
   priv: "priv/test"
