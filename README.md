@@ -9,7 +9,7 @@ More detailed examples of configuration and usage are in the tests.
 
 ## Installation
 
-Basic steps are 
+Basic steps are
 
 1. Add Spur to your application deps
 2. Generate and run a migration that adds an activities table to your repo (see priv/test/migrations)
@@ -25,7 +25,7 @@ That's enough to start tracking arbitrary activities.
 ```
 %Spur.Activity{actor: "caesar", action: "came", object: "your-county", meta: %{also: ["saw", "conquered"]}}
 ```
-    
+
 Fields are based on https://www.w3.org/TR/activitystreams-core/#example-1
 
 ## Getting fancy
@@ -43,7 +43,7 @@ defmodule Battle do
   end
 end
 ```
-    
+
 Now instead of using `Repo` to perform your operation, use `Spur` instead.
 
 ```
@@ -52,7 +52,7 @@ Now instead of using `Repo` to perform your operation, use `Spur` instead.
 |> Spur.insert
 ```
 
-A record for both your `Battle` and an `Activity` with action set to insert will be stored in the DB. Of course, the `Battle` fails validations, neither will be inserted and the changeset will be returned with errors, just as Repo would. (*Note*: As of 0.3.0, Spur supports the `expose_transactions` config, which when sets to true returns the raw Ecto transaction. Us this if you need to access the created `Activity` struct.) 
+A record for both your `Battle` and an `Activity` with action set to insert will be stored in the DB. Of course, the `Battle` fails validations, neither will be inserted and the changeset will be returned with errors, just as Repo would. (*Note*: As of 0.3.0, Spur supports the `expose_transactions` config, which when sets to true returns the raw Ecto transaction. Us this if you need to access the created `Activity` struct.)
 
 ### Audience
 
@@ -72,11 +72,11 @@ Now when you use one of the callback's above to track an object, the resulting `
 
       Ecto.Changeset.change(trackable_struct)
       |> Spur.update
-      
+
       [%Spur.Activity{action: update}] = watcher.activities
 
 ---
 
-> <<Someone who finds a trace [Spur] certainly also knows that something has existed before and is now left behind. But one does not just take note of this. One begins to search and to ask oneself where it leads.>> 
-> 
+> <<Someone who finds a trace [Spur] certainly also knows that something has existed before and is now left behind. But one does not just take note of this. One begins to search and to ask oneself where it leads.>>
+>
 > Hans Georg-Gadamer, "Hermeneutik auf dem Spur"
