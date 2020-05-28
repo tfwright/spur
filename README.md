@@ -59,9 +59,8 @@ A record for both your `Battle` and an `Activity` with action set to insert will
 To automatically associate the `Activity` with an [audience](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-audience) requires a bit of extra configuration:
 
 1. Add `audience_module` to your app's Spur config: `audience_module: MyApp.Accounts.User`
-2. Add a `many_to_many` association between your audience module's Ecto schema.By default Spur expects this to be named `:activities`
-3. If you want to name it something else, add another line to the config: `audience_assoc_name: :silly_users`
-4. Finally, make sure that your trackable objects implement `audience`. It should return either an Ecto query or a plain list of the audience objects configured with the above association.
+2. Add a `many_to_many` association between your audience module's Ecto schema. By default Spur expects this to be named `:activities`. If you want to name it something else, add another line to the config: `audience_assoc_name: :events`.
+3. Finally, make sure that your trackable objects implement `audience`. It should return either an Ecto query or a plain list of the audience structs configured with the above association.
 
 Now when you use one of the callback's above to track an object, the resulting `Activity` will automatically be associated with the audience records returned for that object.
 
