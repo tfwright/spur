@@ -5,7 +5,7 @@ defmodule Spur.Activity do
 
   alias Spur.Activity
 
-  schema "activities" do
+  schema Application.get_env(:spur, :activities_table_name, "activities") do
     field(:action, :string)
     field(:actor, :string)
     field(:object, :string, default: nil)
