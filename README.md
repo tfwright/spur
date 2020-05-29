@@ -11,16 +11,17 @@ More detailed examples of configuration and usage are in the tests.
 
 Basic steps are
 
-1. Add Spur to your application deps
-2. Generate and run a migration that adds an "activities" table to your repo (see priv/test/migrations). To use a different table name, set the `activities_table_name` config.
-3. Add the following config:
+1. Add Spur to your application `deps`.
+2. Add the following config to your application:
 
     ```
     config :spur, ecto_repos: [MyApp.Repo],
                   repo: MyApp.Repo
     ```
+3. Generate and run a migration that adds an "activities" table to your repo (see priv/test/migrations). To use a different table name, set the `activities_table_name` config.
 
-That's enough to start tracking arbitrary activities.
+
+That's enough to start tracking arbitrary activities:
 
 ```
 %Spur.Activity{actor: "caesar", action: "came", object: "your-county", meta: %{also: ["saw", "conquered"]}}
@@ -32,7 +33,7 @@ Fields are based on https://www.w3.org/TR/activitystreams-core/#example-1
 
 ### "Callbacks"
 
-If you want to make use of automatic tracking of inserts, updates and deletes, make sure your objects implement the required fields as functions.
+If you want to make use of automatic tracking of inserts, updates and deletes, make sure your objects implement the required fields as functions:
 
 ```
 defmodule Battle do
@@ -44,7 +45,7 @@ defmodule Battle do
 end
 ```
 
-Now instead of using `Repo` to perform your operation, use `Spur` instead.
+Now instead of using `Repo` to perform your operation, use `Spur` instead:
 
 ```
 %MyApp.Battle{general_id: 5}
@@ -52,7 +53,9 @@ Now instead of using `Repo` to perform your operation, use `Spur` instead.
 |> Spur.insert
 ```
 
-A record for both your `Battle` and an `Activity` with action set to insert will be stored in the DB. Of course, the `Battle` fails validations, neither will be inserted and the changeset will be returned with errors, just as Repo would. (*Note*: As of 0.3.0, Spur supports the `expose_transactions` config, which when sets to true returns the raw Ecto transaction. Us this if you need to access the created `Activity` struct.)
+In this example, a record for both your `Battle` and an `Activity` with action set to insert will be stored in the DB. Of course, the `Battle` fails validations, neither will be inserted and the changeset will be returned with errors, just as `Repo` would. Otherwise it will return the `Battle`. (*Note*: As of 0.3.0, Spur supports the `expose_transactions` config, which when sets to true returns the raw Ecto transaction. Us this if you need to access the created `Activity` struct.)
+
+Each of these callback functions also take a `Map` of properties that will be added to the `Activity` record, or a `Function` that returns a `Map`. See the [documentation](https://hexdocs.pm/spur/Spur.html#insert/2) for examples.
 
 ### Audience
 
@@ -62,7 +65,7 @@ To automatically associate the `Activity` with an [audience](https://www.w3.org/
 2. Add a `many_to_many` association between your audience module's Ecto schema. By default Spur expects this to be named `:activities`. If you want to name it something else, add another line to the config: `audience_assoc_name: :events`.
 3. Finally, make sure that your trackable objects implement `audience`. It should return either an Ecto query or a plain list of the audience structs configured with the above association.
 
-Now when you use one of the callback's above to track an object, the resulting `Activity` will automatically be associated with the audience records returned for that object.
+Now when you use one of the callback's above to track an object, the resulting `Activity` will automatically be associated with the audience records returned for that object:
 
       # SpurTest.TrackableStruct
       def audience(trackable_struct), do: Ecto.assoc(trackable_struct, :watchers)
