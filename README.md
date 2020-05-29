@@ -5,7 +5,7 @@
 
 Loosely based on https://github.com/chaps-io/public_activity, a very simple utility for quickly setting up an activity stream in your Elixir/Ecto app.
 
-More detailed examples of configuration and usage are in the tests. See [this thread](https://elixirforum.com/t/spur-very-simple-activity-streams-for-ecto/22086?u=tfwright) for more information on the idea behind Spur and the changelog.
+More detailed examples of configuration and usage are in the [tests](https://github.com/tfwright/spur/blob/master/test/spur_test.exs). See [this thread](https://elixirforum.com/t/spur-very-simple-activity-streams-for-ecto/22086?u=tfwright) for more information on the idea behind Spur and the changelog.
 
 ## Installation
 
