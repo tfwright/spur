@@ -3,7 +3,11 @@ use Mix.Config
 config :spur,
   ecto_repos: [SpurTest.Repo],
   repo: SpurTest.Repo,
-  audience_module: SpurTest.AppUser
+  audience_assoc_options: [
+    SpurTest.AppUser,
+    join_through: "activities_users",
+    join_keys: [activity_id: :id, user_id: :id]
+  ]
 
 config :spur, SpurTest.Repo,
   adapter: Ecto.Adapters.Postgres,

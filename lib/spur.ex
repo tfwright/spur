@@ -3,6 +3,8 @@ defmodule Spur do
   Simple activity tracking for Ecto-backed Elixir apps.
   """
 
+  @before_compile Spur.DeprecationCheck
+
   alias Spur.{Activity, Trackable}
 
   alias Ecto.{Multi}
@@ -63,15 +65,15 @@ defmodule Spur do
       changeset_for_action(trackable, action, func_or_params)
     end)
     |> Multi.run(:audience, fn _repo, %{trackable: trackable, activity: activity} ->
-      associate_with_audience(audience_module(), activity, trackable)
+      deprecated_associate_with_audience(audience_module(), activity, trackable)
     end)
     |> repo().transaction
     |> transaction_or_result(Application.fetch_env!(:spur, :expose_transactions))
   end
 
-  defp associate_with_audience(nil, _, _), do: {:ok, []}
+  defp deprecated_associate_with_audience(nil, _, _), do: {:ok, []}
 
-  defp associate_with_audience(module, activity, trackable) do
+  defp deprecated_associate_with_audience(module, activity, trackable) do
     audience_assoc_reflection = module.__schema__(:association, audience_assoc_name())
 
     [{audience_fkey_name, audience_pkey_name}, {activity_fkey_name, activity_pkey_name}] =
@@ -103,6 +105,14 @@ defmodule Spur do
       target: Trackable.target(trackable)
     }
     |> Activity.changeset(func_or_params |> extract_params(trackable))
+    |> associate_with_audience(Application.get_env(:spur, :audience_assoc_options), trackable)
+  end
+
+  defp associate_with_audience(changeset, nil, _trackable), do: changeset
+
+  defp associate_with_audience(changeset, _opts, trackable) do
+    changeset
+    |> Ecto.Changeset.put_assoc(:audience, Trackable.audience(trackable) |> query_to_list)
   end
 
   defp extract_params(%{} = params, _obj), do: params

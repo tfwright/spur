@@ -12,6 +12,11 @@ defmodule Spur.Activity do
     field(:target, :string, default: nil)
     field(:meta, :map, default: %{})
 
+    with {:ok, opts} <- Application.fetch_env(:spur, :audience_assoc_options),
+         [module | args] <- opts do
+      many_to_many(:audience, module, args)
+    end
+
     timestamps(updated_at: false)
   end
 
