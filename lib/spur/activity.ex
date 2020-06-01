@@ -3,8 +3,6 @@ defmodule Spur.Activity do
 
   import Ecto.Changeset
 
-  alias Spur.Activity
-
   schema Application.get_env(:spur, :activities_table_name, "activities") do
     field(:action, :string)
     field(:actor, :string)
@@ -15,7 +13,7 @@ defmodule Spur.Activity do
     timestamps(updated_at: false)
   end
 
-  def changeset(%Activity{} = trace, %{} = attrs) do
+  def changeset(%__MODULE__{} = trace, %{} = attrs) do
     trace
     |> cast(attrs, [:action, :actor, :object, :target, :meta])
     |> validate_required([:action, :actor])
