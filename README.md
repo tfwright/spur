@@ -12,12 +12,12 @@ More detailed examples of configuration and usage are in the [tests](https://git
 Basic steps are
 
 1. Add Spur to your application `deps`.
-2. Add the following config to your application:
+2. Tell Spur which Ecto Repo to use:
 
     ```
-    config :spur, ecto_repos: [MyApp.Repo],
-                  repo: MyApp.Repo
+    config :spur, repo: MyApp.Repo
     ```
+
 3. Generate and run a migration that adds an "activities" table to your repo (see priv/test/migrations). To use a different table name, set the `activities_table_name` config.
 
 
