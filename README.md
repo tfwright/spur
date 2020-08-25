@@ -55,7 +55,11 @@ Now instead of using `Repo` to perform your operation, use `Spur` instead:
 
 In this example, a record for both your `Battle` and an `Activity` with action set to insert will be stored in the DB. Of course, the `Battle` fails validations, neither will be inserted and the changeset will be returned with errors, just as `Repo` would. Otherwise it will return the `Battle`. (*Note*: As of 0.3.0, Spur supports the `expose_transactions` config, which when sets to true returns the raw Ecto transaction. Us this if you need to access the created `Activity` struct.)
 
-Each of these callback functions also take a `Map` of properties that will be added to the `Activity` record, or a `Function` that returns a `Map`. See the [documentation](https://hexdocs.pm/spur/Spur.html#insert/2) for examples.
+Each of these callback functions also take a `Map` of properties that will be added to the `Activity` record, or a `Function` that returns a `Map`. You can use this to set or override default Activity data in the callback itself. If, for example, the actor for a given schema is not stored in the Repo, you may want to use the logged in user instead:
+
+```
+Spur.insert(changeset, %{actor: conn.assigns.current_user.id})
+```
 
 ### Audience
 
