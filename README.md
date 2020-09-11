@@ -1,7 +1,7 @@
 # Spur
 
-[![Hex.pm](https://img.shields.io/hexpm/v/spur.svg)]()
-![](https://github.com/tfwright/spur/workflows/CI/badge.svg)
+[![Hex.pm](https://img.shields.io/hexpm/v/spur.svg)](https://hex.pm/packages/spur)
+[![CI status](https://github.com/tfwright/spur/workflows/CI/badge.svg)](https://github.com/tfwright/spur/actions)
 
 Loosely based on [chaps-io/public_activity](http://github.com/chaps-io/public_activity), a very simple utility for quickly setting up an activity stream in your Elixir/Ecto app.
 
