@@ -18,7 +18,8 @@ Basic steps are
     config :spur, repo: MyApp.Repo
     ```
 
-3. Generate and run a migration that adds an "activities" table to your repo (see priv/test/migrations). To use a different table name, set the `activities_table_name` config.
+3. Generate and run a migration that adds an "activities" table to your repo (see priv/test/migrations). To use a different table name, set the `activities_table_name` config. To use
+   `:uuid` primary key for your activities table, set the `uuid_primary_key_enabled` config to true.
 
 
 That's enough to start tracking arbitrary activities:
