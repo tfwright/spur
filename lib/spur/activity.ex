@@ -3,6 +3,11 @@ defmodule Spur.Activity do
 
   import Ecto.Changeset
 
+  if Application.get_env(:spur, :uuid_primary_key_enabled, false) do
+    @primary_key {:id, :binary_id, autogenerate: true}
+    @foreign_key_type :binary_id
+  end
+
   schema Application.get_env(:spur, :activities_table_name, "activities") do
     field(:action, :string)
     field(:actor, :string)
