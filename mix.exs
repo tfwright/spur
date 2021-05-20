@@ -32,8 +32,8 @@ defmodule Spur.MixProject do
   defp deps do
     [
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:ecto, "~> 3.0"},
-      {:ecto_sql, "~> 3.0", only: :test},
+      {:ecto, "~> 3.6"},
+      {:ecto_sql, "~> 3.6", only: :test},
       {:postgrex, "~> 0.14", only: :test},
       {:jason, "~> 1.0", only: :test},
       {:atomic_map, "~> 0.9"}
